@@ -50,6 +50,12 @@ When a round is complete, you can announce the results of the match by copying t
 
 A player can be dropped at any time by clicking on their name in the list.  The drop will be announced in the registration chat.
 
+## Author Statement
+
+I wrote Unsilent Attendant to help me run pauper tournaments (only commons allowed) every week that I've been running for about two years on [PDCMagic](http://pdcmagic.com).  I ran SPDC using it for about two years, and created it out of a need to simplify the process. 
+
+If you have trouble using Unsilent Attendant, feel free to email me at jamuraa@base0.net - I can answer questions or help out.
+
 ## License
 
 Unsilent Attendant is BSD licensed.  The license is at the beginning of the unsilent-attendant.au3 file.
