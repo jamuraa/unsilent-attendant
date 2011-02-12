@@ -3,22 +3,34 @@
 A AutoIt3 program intended to help people who run free player-run tournaments on Magic Online manage all of the tasks that they need to do throughout the tournament.  It was originally built by me for making the most complex part of running these tournaments, the registration phase, a lot simpler by keeping track of all of the stats.
 
 This program will help you by:
-  * Announcing before registration every 5 minutes how long there is until registration.
-  * Handling registration phase:
-     * Parsing the chatroom looking for registrants and keeping a list
-     * Announcing when a player is registered
-     * Announcing the players that are registered every minute
-     * Announcing in the main channel how much time is left in registration
-  * Announcing when a player has dropped the tournament
-  * Announcing how many matches are left in the round
-  * Announcing the pairings for each new round and the results of a round that just ended
-  
 
-## Usage
+* Announcing before registration every 5 minutes how long there is until registration.
+* Handling registration phase:
+  * Parsing the chatroom looking for registrants and keeping a list
+  * Announcing when a player is registered
+  * Announcing the players that are registered every minute
+  * Announcing in the main channel how much time is left in registration
+* Announcing when a player has dropped the tournament
+* Announcing how many matches are left in the round
+* Announcing the pairings for each new round and the results of a round that just ended
+
+## Requirements
+
+In order to use this program, you need to have [AutoIt3](http://www.autoitscript.com/site/autoit/) installed.  Open the script and press F5 to start the program.  If you are on Vista or Windows 7, an Admin access window will pop up.  Unsilent Attendant needs admin access because otherwise it cannot send keystrokes to other windows.
+
+It's also probably not of interest to you unless you have a copy of Magic the Gathering Online.
+
+It is also not very useful unless you have a copy of DCI Reporter.  It is up to you to acquire a copy of this program, since it is not free.   Unsilent Attendant has been tested with DCI Reporter 2.9.x and I can't guatantee that it will work with version 3.x
+
+## Setup
 
 Unsilent Attendant assumes that you have a dual-chatroom setup for your tournaments.  In the **normal chat** window, it will announce pairings, confirm round results when the round has been completed, and do some other announcements.  In the **registration chat** window, it will check for registrations (when in registration), announce players registered, and announce any player drops.  I also use the registration chat as a results chat, so all of the results are in this window.  Matches left announcements will be made in both chats.
 
-In order to use this program, you need to have [AutoIt3](http://www.autoitscript.com/site/autoit/) installed.  Open the script and press F5 to start the program.  If you are on Vista or Windows 7, an Admin access window will pop up.  Unsilent Attendant needs admin access because otherwise it cannot send keystrokes to other windows.
+Configuration for the tournament is at the top of the script file, right below the large comment block.   Change the names of the chat windows and the tournament name if you like.  The tournament name can be changed again later as well.
+
+You can also specify announcements to be made when there are a certain number of players registered, for example that the tournament will be running for more rounds to accomodate more players.  These can be set using the `$morePlayersAnnouncements` array.  Before the comma is the number of registered players that are needed, and after the comma is what will be announced.  **If you change the number of announcements in this array, remember to change the number of entries in the first line**
+
+## Usage
 
 Once the program has started, there are a number of buttons that will help you control it.  To get started, place your chat windows where you want them to be.   It is important to not move the tournament chat windows once their positions are set in Unsilent Attendant.  Then press the "Set Chat Pos" button, and it will prompt you to place your mouse where the chat window (normal chat, pairings, round results go here) is.  Put your mouse where you enter text in the chat window and press SPACE.  Then repeat this for the registration chat window.
 
