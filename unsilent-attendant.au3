@@ -130,7 +130,10 @@ $morePlayersAnnouncements[2] = "40,[sSET ALA R] WE NOW HAVE 40 REGISTERED PLAYER
 $comChannelName = "spdccom"
 $normalChannelName = "pdc"
 
-$defaultTourneyName = "SPDC 15."
+$defaultTourneyName = "SPDC 19."
+
+; How long to wait when pasting into chat from the clipboard, in milliseconds.
+$clipboardChatDelay = 500
 
 ;;;; CONFIG ENDS HERE ;;;;
 
@@ -164,12 +167,12 @@ $comchatpos[1] = -1
 Dim $dcirpos[2]
 $dcirpos[0] = -1
 $dcirpos[1] = -1
+Global $chatLocationSet = False
 
 Dim $comChannelName
 Dim $normalChannelName
 Dim $manualAddPlayer
 Dim $preRegTimer
-
 
 $maxtime = 600000
 $registeredplayers = 0
@@ -320,7 +323,9 @@ Func GuiAlwaysOnCheck($guimsg = False)
 		$newplayer = GUICtrlRead($manualAddPlayer)
 		If $newplayer <> "" Then
 			addRegistrant($newplayer)
-			comChannelText("Host added registrant: " & $newplayer)
+			If $chatLocationSet Then
+				comChannelText("Host added registrant: " & $newplayer)
+			EndIf
 			GUICtrlSetData($manualAddPlayer, "")
 		EndIf
 	Case $guimsg = $regGUIlist
@@ -349,9 +354,9 @@ Func chatAtChannel($saythis, $chatx, $chaty)
 	MouseClick("left", $chatx, $chaty, 1, 0)
 	sleep(20)
 	MouseClick("left", $chatx, $chaty, 1, 0)
-	sleep(200)
+	sleep(100)
 	ClipPut($saythis)
-	sleep(400)
+	sleep(200)
 	Send("^v{ENTER}")
 	ClipPut($prevclip)
 	MouseMove($prevmousepos[0], $prevmousepos[1], 0)
@@ -381,6 +386,7 @@ Func getChatPos() ; Query the user for the chat window positions
 	MsgBox(262144, "Get Com Chat Position", "Move the mouse to the position that the registration chat window is, and hit the SPACEBAR");
 	$comchatpos = waitForSpaceBarPos()
 	MsgBox(262144, "Tourney Chat Position Set", "Tourney Chat Position Set to " & $comchatpos[0] & ", " & $comchatpos[1]);
+	$chatLocationSet = True
 EndFunc
 
 Func getDciPos() ; Query the user for the DCI-R Registration positions
@@ -440,9 +446,9 @@ Func runRegistration() ; Start the tournament!
 			EndIf
 			$startTime = TimerInit() ; reset the timer
 		endif
-		If _IsPressed("1B", $dll) Then ; Pressing escape stops registration
-			Return
-		EndIf
+		;If _IsPressed("1B", $dll) Then ; Pressing escape stops registration
+		;	Return
+		;EndIf
 		$timeCheckNow = (TimerDiff($checkTime) > 10000) and (GUICtrlRead($autoRunRegBtn) = $GUI_CHECKED)
 		If _IsPressed("7C", $dll) or $timeCheckNow Then ; Pressing F13 = scan players
 			processNewRegistrants()
@@ -659,7 +665,7 @@ Func chatFromClipboardSlowly() ; Enter the text slowly.
 		$line = $array[$linenum]
 		$line = StringStripWS($line, 3)
 		channelText($line)
-		Sleep(2000)
+		Sleep($clipboardChatDelay)
 	Next
 EndFunc
 
